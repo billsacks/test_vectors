@@ -141,7 +141,18 @@ contains
     ! add vectors
     vec_out%x = this%x + vec2%x
     vec_out%y = this%y + vec2%y
-    !vec_out%z = this%z + vec2%z !can't do this!!
+    select type(vec2)
+    class is (vec3d)
+       select type(vec_out)
+       class is (vec3d)
+          vec_out%z = this%z + vec2%z
+       class default
+          print *, 'vec_out must be vec3d'
+          stop
+       end select
+    class default
+       print *, 'vec_out must be vec3d'
+    end select
 
   end subroutine vector_add_sub
 
@@ -196,7 +207,7 @@ program test_vector
 
   vec5%x = 2.0
   vec5%y = 5.0
-  vec5%z = 10.0
+  vec5%z = 21.0
 
   ! Create the array of vector pointers
   vecs(1)%p => vec1
@@ -212,5 +223,8 @@ program test_vector
 
   call vecs(2)%p%subtr(vecs(1)%p, vecs(3)%p)
   write(*,'(A, F8.5, A, F8.5)') "V2 - V1 = ", vec3%x, " , ", vec3%y
+
+  call vec4%add(vec5, vec6)
+  write(*, '(A, F8.5, A, F8.5, A, F8.5)') "V4 + V5 = ", vec6%x, ", ", vec6%y, ", ", vec6%z
 
 end program test_vector
