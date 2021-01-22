@@ -173,10 +173,9 @@ program test_vector
   implicit none
 
   ! Declare variables
-  type(vec2d), pointer :: vec1, vec2, vec3  ! 2D vector objects
-  type(vec3d), pointer :: vec4, vec5, vec6  ! 2D vector objects
+  type(vec2d), target :: vec1, vec2, vec3  ! 2D vector objects
+  type(vec3d), target :: vec4, vec5, vec6  ! 2D vector objects
   integer              :: i                 ! Loop index
-  integer              :: istat             ! Allocate status
 
   ! create an array of shape pointers
   type :: vec_ptr
@@ -185,27 +184,19 @@ program test_vector
   type(vec_ptr), dimension(6) :: vecs
 
   ! Create and initialize some vectors
-  allocate(vec1, stat = istat)
   vec1%x = 5.0
   vec1%y = 6.0
 
-  allocate(vec2, stat = istat)
   vec2%x = 10.0
   vec2%y = 12.0
 
-  allocate(vec3, stat = istat)
-
-  allocate(vec4, stat = istat)
   vec4%x = 1.0
   vec4%y = -1.0
   vec4%z = -10.0
 
-  allocate(vec5, stat = istat)
   vec5%x = 2.0
   vec5%y = 5.0
   vec5%z = 10.0
-
-  allocate(vec6, stat = istat)
 
   ! Create the array of vector pointers
   vecs(1)%p => vec1
