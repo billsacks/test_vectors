@@ -21,7 +21,7 @@ module vector_class
   end type vec
 
   abstract interface
-     subroutine addx()
+     subroutine addx(this, vec2, vec_out)
 
        import vec
        implicit none
@@ -32,7 +32,7 @@ module vector_class
 
      end subroutine addx
 
-     subroutine subtrx()
+     subroutine subtrx(this, vec2, vec_out)
 
        import vec
        implicit none
